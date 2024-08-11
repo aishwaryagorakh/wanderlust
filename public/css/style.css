@@ -1,0 +1,101 @@
+/* General Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0; /* Ensure no default margin */
+}
+
+.container {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar {
+    height: 5rem;
+    background-color: white;
+    display: flex;
+    align-items: center; /* Vertically center items */
+    padding: 0 1rem; /* Add some padding */
+}
+
+.fa-compass {
+    color: #fe424b;
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: #222222 !important;
+}
+
+.f-info-links a {
+    text-decoration: none;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+    color: #222222;
+}
+
+.f-info-links {
+    width: 100%;
+}
+
+.f-info-social {
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.f-info-social i {
+    margin-left: 1rem;
+}
+
+.f-info {
+    height: 8rem;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; /* Corrected to center */
+    background-color: #ebebeb;
+}
+
+/* Card Styles */
+.card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100%;
+    height: auto; /* Ensure images maintain aspect ratio */
+}
+
+.listing-links {
+    text-decoration: none;
+}
+
+.card-img-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+.add-btn {
+    background-color: #fe424b;
+    color: white; /* Ensure text is visible */
+    border: none; /* Remove border if any */
+    padding: 0.5rem 1rem; /* Add some padding */
+    border-radius: 0.25rem; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor */
+}
+
+/* Additional Styles */
+.show-img {
+    /* Add styles for .show-img if necessary */
+}
