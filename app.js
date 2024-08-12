@@ -52,10 +52,10 @@ const sessionOptions = {
   },
 };
 
-// Route Handlers
-app.get("/", (req, res) => {
-  res.send("welcome");
-});
+// // Route Handlers
+// app.get("/", (req, res) => {
+//   res.send("welcome");
+// });
 
 app.use(session(sessionOptions));
 app.use(flash());
