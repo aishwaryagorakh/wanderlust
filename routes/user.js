@@ -5,39 +5,21 @@ const router = express.Router();
 const asyncWrap = require("../utils/asyncWrap");
 const { isLoggedIn } = require("../middlewares/middlewares");
 const { redirectUrl } = require("../middlewares/middlewares");
+const {
+  signup,
+  rendersignupForm,
+  renderLoginForm,
+  login,
+  logout,
+} = require("../controllers/users");
 
-router.get("/signup", async (req, res) => {
-  res.render("users/signup.ejs");
-});
+router.get("/signup", rendersignupForm);
 
 // Register Route
-router.post(
-  "/signup",
-  asyncWrap(async (req, res) => {
-    try {
-      const { email, username, password } = req.body;
-      const user = new User({ email, username });
-      const registeredUser = await User.register(user, password);
-      // console.log(registeredUser);
-      req.login(registeredUser, (err) => {
-        if (err) {
-          return next(err);
-        }
-        req.flash("success", "Welcome to Wanderlust");
-        res.redirect("/listings");
-      });
-    } catch (e) {
-      console.log(e);
-      req.flash("error", e.message); // This should correctly set the error flash message
-      res.redirect("/signup");
-    }
-  })
-);
+router.post("/signup", asyncWrap(signup));
 
 // Login Route
-router.get("/login", async (req, res) => {
-  res.render("users/login.ejs");
-});
+router.get("/login", renderLoginForm);
 
 router.post(
   "/login",
@@ -46,23 +28,10 @@ router.post(
     failureFlash: true,
     failureRedirect: "/login",
   }),
-  (req, res) => {
-    req.flash("success", "Welcome back!");
-    let redirectUrl = res.locals.redirectUrl || "/listings";
-    console.log(redirectUrl);
-    res.redirect(redirectUrl);
-  }
+  login
 );
 
 // Logout Route
-router.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-  });
-  req.flash("success", "Logged out successfully");
-  res.redirect("/listings");
-});
+router.get("/logout", logout);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+require("dotenv/config");
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -53,7 +54,7 @@ const sessionOptions = {
 
 // Route Handlers
 app.get("/", (req, res) => {
-  res.send("Hi, I am root");
+  res.send("welcome");
 });
 
 app.use(session(sessionOptions));
