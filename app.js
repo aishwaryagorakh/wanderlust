@@ -12,8 +12,9 @@ const engine = require("ejs-mate");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlusts";
+const DB_URL = process.env.MONGO_URL;
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
@@ -24,7 +25,7 @@ const app = express();
 // Connect to MongoDB
 async function main() {
   try {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(DB_URL);
     console.log("Connected to DB");
   } catch (err) {
     console.error("Error connecting to DB:", err);
@@ -40,8 +41,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.engine("ejs", engine); // Ensure ejs-mate is correctly used
 
+const store = MongoStore.create({
+  mongoUrl: DB_URL,
+  crypto: {
+    secret: "mysecret",
+    touchAfter: 24 * 3600,
+  },
+});
+
+store.on("error", (err) => {
+  console.log("error on mongo session store", err);
+});
+
 //session
 const sessionOptions = {
+  store: store,
   secret: "mysecret",
   resave: false,
   saveUninitialized: true,
