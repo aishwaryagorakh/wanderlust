@@ -44,7 +44,7 @@ app.engine("ejs", engine); // Ensure ejs-mate is correctly used
 const store = MongoStore.create({
   mongoUrl: DB_URL,
   crypto: {
-    secret: "mysecret",
+    secret: process.env.SECRET,
     touchAfter: 24 * 3600,
   },
 });
@@ -56,7 +56,7 @@ store.on("error", (err) => {
 //session
 const sessionOptions = {
   store: store,
-  secret: "mysecret",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
